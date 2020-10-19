@@ -1,0 +1,15 @@
+{
+    "alert": {
+        "group": "GREETINGS",
+        "label": "Greetings Audio",
+        "type": "sound-input"
+    },
+    "alertVolume": {
+        "group": "GREETINGS",
+        "label": "Audio Volume",
+        "type": "slider",
+        "value": 50,
+        "min": 0,
+        "max": 100
+    }
+}
