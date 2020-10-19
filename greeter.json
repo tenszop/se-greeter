@@ -1,4 +1,9 @@
 {
+    "widgetDuration": {
+        "type": "number",
+        "label": "Greetings Duration",
+        "value": 5
+    },
     "alert": {
         "group": "GREETINGS",
         "label": "Greetings Audio",

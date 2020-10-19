@@ -1,10 +1,9 @@
-let greetedUsers, field, alert;
+let greetedUsers = [], greetQueue = [], ignoredUsers = [], field, greeting = false;
 
 window.addEventListener('onWidgetLoad', (obj) => {
     alert = document.getElementById("alert");
     field = obj.detail.fieldData;
-  	greetedUsers = [];
-    greetedUsers.push("100135110");
+    ignoredUsers.push("100135110");
 });
 
 window.addEventListener('onEventReceived', (obj) => {
@@ -12,12 +11,25 @@ window.addEventListener('onEventReceived', (obj) => {
     const data = obj.detail.event.data;
 
     if(listener === "message") {
+        if(greetedUsers.includes(data.userId) || ignoredUsers.include(data.userId)) return;
 
-        if(!greetedUsers.includes(data.userId)) {
-            greetedUsers.push(data.userId);
-
-            alert.innerHTML = `<audio id="audio" autoplay hidden src="${field.alert}"></audio>`;
-            document.getElementById('audio').volume = field.alertVolume / 100;
-        }
+        greetQueue.push(data.userId);
+        greet();
     }
 });
+
+let greet = () => {
+    if (greeting || !greetQueue.length) return;
+    const user = greetQueue.pop();
+    greeting = true;
+
+    let alert= new Audio(field.alert);
+    alert.volume=field.alertVolume/100;
+    alert.play();
+    setTimeout(() => {
+        greeting = false;
+        greet();
+    }, field.widgetDuration * 1000);
+    
+    greetedUsers.push(user);
+}
